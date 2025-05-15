@@ -2,7 +2,7 @@ import { Button, Form, Input, message } from 'antd';
 import { useSetRecoilState } from 'recoil';
 import { postsState } from '../recoil/atoms';
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { api } from '../api/posts';
 
 export default function PostForm() {
   const setPosts = useSetRecoilState(postsState);
@@ -10,7 +10,7 @@ export default function PostForm() {
 
   const mutation = useMutation({
     mutationFn: (post) =>
-      axios.post('https://jsonplaceholder.typicode.com/posts', post),
+      api.post('/items/posts', post),
     onSuccess: (res) => {
       setPosts((prev) => [res.data, ...prev]);
       message.success('Post created!');
